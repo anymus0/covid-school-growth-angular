@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseAPI: 'https://covid19-api.org/api/status/hu'
+  API_URL: 'http://127.0.0.1:3000'
 };
 
 /*
