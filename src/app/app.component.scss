@@ -1,0 +1,42 @@
+.chart-container {
+  text-align: center;
+}
+
+// mobile portrait
+@media only screen and (max-width: 1199px) and (orientation : portrait) {
+  .mobile-portrait {
+    display: block;
+  }
+  .mobile-landscape {
+    display: none;
+  }
+  .desktop {
+    display: none;
+  }
+}
+
+// mobile landscape
+@media only screen and (max-width: 1199px) and (orientation : landscape) {
+  .mobile-portrait {
+    display: none;
+  }
+  .mobile-landscape {
+    display: block;
+  }
+  .desktop {
+    display: none;
+  }
+}
+
+// desktop
+@media only screen and (min-width: 1200px) {
+  .mobile-portrait {
+    display: none;
+  }
+  .mobile-landscape {
+    display: none;
+  }
+  .desktop {
+    display: block;
+  }
+}

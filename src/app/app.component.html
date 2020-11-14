@@ -1,3 +1,105 @@
-<div id="app">
-
+<div id="app" class="dark">
+  <div class="container-fluid chart-container">
+    <div class="row">
+      <div class="col">
+        <h3>asd clr test</h3>
+        <ngx-charts-area-chart
+          class="mobile-portrait"
+          [view]="[400, 650]"
+          [legend]="false"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          [xAxis]="true"
+          [yAxis]="true"
+          [xAxisLabel]="'Days'"
+          [yAxisLabel]="'Number of Total Cases'"
+          [timeline]="true"
+          [results]="statusesChartData"
+          [autoScale]="true"
+          [gradient]="false"
+        >
+        </ngx-charts-area-chart>
+        <ngx-charts-area-chart
+          class="mobile-landscape"
+          [view]="[700, 500]"
+          [legend]="false"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          [xAxis]="true"
+          [yAxis]="true"
+          [xAxisLabel]="'Days'"
+          [yAxisLabel]="'Number of Total Cases'"
+          [timeline]="true"
+          [results]="statusesChartData"
+          [autoScale]="true"
+          [gradient]="false"
+        >
+        </ngx-charts-area-chart>
+        <ngx-charts-area-chart
+          class="desktop"
+          [view]="[1800, 800]"
+          [legend]="false"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          [xAxis]="true"
+          [yAxis]="true"
+          [xAxisLabel]="'Days'"
+          [yAxisLabel]="'Number of Total Cases'"
+          [timeline]="true"
+          [results]="statusesChartData"
+          [autoScale]="true"
+          [gradient]="false"
+        >
+        </ngx-charts-area-chart>
+      </div>
+      <div class="col">
+        <h3>asd clr test</h3>
+        <ngx-charts-bar-horizontal
+          class="mobile-portrait"
+          [view]="[400,850]"
+          [results]="casesChartData"
+          [xAxisLabel]="'Number of new cases on each day'"
+          [legendTitle]=""
+          [yAxisLabel]="'Days'"
+          [legend]="false"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          [xAxis]="true"
+          [yAxis]="false"
+          [gradient]="false"
+        >
+        </ngx-charts-bar-horizontal>
+        <ngx-charts-bar-vertical
+          class="mobile-landscape"
+          [view]="[700, 500]"
+          [results]="casesChartData"
+          [xAxisLabel]="'Number of new cases on each day'"
+          [legendTitle]=""
+          [yAxisLabel]="'Days'"
+          [legend]="false"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          [xAxis]="true"
+          [yAxis]="true"
+          [gradient]="false"
+        >
+        </ngx-charts-bar-vertical>
+        <ngx-charts-bar-vertical
+          class="desktop"
+          [view]="[2000, 800]"
+          [results]="casesChartData"
+          [xAxisLabel]="'Number of new cases on each day'"
+          [legendTitle]=""
+          [yAxisLabel]="'Days'"
+          [legend]="false"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          [xAxis]="true"
+          [yAxis]="true"
+          [gradient]="false"
+        >
+        </ngx-charts-bar-vertical>
+      </div>
+    </div>
+  </div>
 </div>

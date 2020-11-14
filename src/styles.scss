@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+@import './app/dark-charts.scss';
+
+html {
+  height: 100%;
+}
+body {
+  height: 100%;
+  background-color: #1b1e27;
+  color: aliceblue;
+}
+
+text {
+  fill: aliceblue;
+}
