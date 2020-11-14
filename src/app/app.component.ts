@@ -13,6 +13,7 @@ import { BarChartFormat, AreaChartFormat } from './classes/Chart';
 export class AppComponent implements OnInit {
   statuses: Array<Status> = [];
   cases: Array<Case> = [];
+  totalCases: number;
   statusesChartData: Array<AreaChartFormat>;
   casesChartData: Array<BarChartFormat> = [];
 
@@ -28,8 +29,12 @@ export class AppComponent implements OnInit {
           };
           this.statuses.push(newStatus);
         });
+
+        // WORK WITH FETCHED DATA BELOW:
         // convert fetched data to ngx-chart format
         this.statusesChartData = this.statusesToChartFormat(this.statuses);
+        // set 'totalCases' to the latest status cases value
+        this.totalCases = this.statuses[this.statuses.length - 1].cases;
       }
     );
   }
@@ -44,6 +49,8 @@ export class AppComponent implements OnInit {
           };
           this.cases.push(newCase);
         });
+
+        // WORK WITH FETCHED DATA BELOW:
         // convert fetched data to ngx-chart format
         this.casesChartData = this.casesToChartFormat(this.cases);
       }

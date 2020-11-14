@@ -1,8 +1,14 @@
 <div id="app" class="dark">
   <div class="container-fluid chart-container">
-    <div class="row">
+    <div class="row dailyUpdate">
       <div class="col">
-        <h3>asd clr test</h3>
+        <h3>Total cases since school has started</h3>
+        <p class="totalCases">{{ totalCases }}</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <h3>Total number of cases by date</h3>
         <ngx-charts-area-chart
           class="mobile-portrait"
           [view]="[400, 650]"
@@ -37,7 +43,7 @@
         </ngx-charts-area-chart>
         <ngx-charts-area-chart
           class="desktop"
-          [view]="[1800, 800]"
+          [view]="[1700, 800]"
           [legend]="false"
           [showXAxisLabel]="true"
           [showYAxisLabel]="true"
@@ -52,8 +58,8 @@
         >
         </ngx-charts-area-chart>
       </div>
-      <div class="col">
-        <h3>asd clr test</h3>
+      <div class="col-12">
+        <h3>Number of new daily cases by dates</h3>
         <ngx-charts-bar-horizontal
           class="mobile-portrait"
           [view]="[400,850]"
@@ -71,11 +77,11 @@
         </ngx-charts-bar-horizontal>
         <ngx-charts-bar-vertical
           class="mobile-landscape"
-          [view]="[700, 500]"
+          [view]="[700, 400]"
           [results]="casesChartData"
-          [xAxisLabel]="'Number of new cases on each day'"
+          [xAxisLabel]="'Days'"
           [legendTitle]=""
-          [yAxisLabel]="'Days'"
+          [yAxisLabel]="'Number of new cases on each day'"
           [legend]="false"
           [showXAxisLabel]="true"
           [showYAxisLabel]="true"
@@ -86,11 +92,11 @@
         </ngx-charts-bar-vertical>
         <ngx-charts-bar-vertical
           class="desktop"
-          [view]="[2000, 800]"
+          [view]="[1700, 800]"
           [results]="casesChartData"
-          [xAxisLabel]="'Number of new cases on each day'"
+          [xAxisLabel]="'Days'"
           [legendTitle]=""
-          [yAxisLabel]="'Days'"
+          [yAxisLabel]="'Number of new cases on each day'"
           [legend]="false"
           [showXAxisLabel]="true"
           [showYAxisLabel]="true"

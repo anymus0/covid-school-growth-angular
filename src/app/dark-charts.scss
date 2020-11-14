@@ -14,7 +14,7 @@
      */
   $color-text-dark: #72809b;
   $color-text-med-dark: #919db5;
-  $color-text-med: #A0AABE;
+  $color-text-med: #b9ddfc;
   $color-text-med-light: #d9dce1;
   $color-text-light: #f0f1f6;
   $color-text-lighter: #fff;
@@ -25,6 +25,7 @@
 
     text {
       fill: $color-text-med;
+      font-size: 1.5rem;
     }
 
     .tooltip-anchor {
