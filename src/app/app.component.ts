@@ -53,7 +53,7 @@ export class AppComponent {
           // convert fetched data to ngx-chart format
           this.statusesChartData = this.statusesToChartFormat(this.statuses);
           // set 'totalCases' to the latest status cases value
-          this.totalCases = this.statuses[this.statuses.length - 1].cases;
+          this.totalCases = this.statuses[this.statuses.length - 1].cases - this.statuses[0].cases;
         }
       }
     );
