@@ -1,4 +1,4 @@
-export interface Case {
+export interface CaseModel {
   date: Date;
   newCases: number;
 }

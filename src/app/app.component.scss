@@ -1,7 +1,3 @@
-.chart-container {
-  text-align: center;
-}
-
 // mobile portrait
 @media only screen and (max-width: 1199px) and (orientation : portrait) {
   .mobile-portrait {
@@ -39,6 +35,10 @@
   .desktop {
     display: block;
   }
+}
+
+.chart-container {
+  text-align: center;
 }
 
 .dailyUpdate {

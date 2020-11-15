@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClientService } from './http.service';
 import { environment } from './../environments/environment';
-import { Case } from './classes/Case';
-import { Status } from './classes/Status';
+import { CaseModel } from './classes/Case';
+import { StatusModel } from './classes/Status';
 import { BarChartFormat, AreaChartFormat } from './classes/Chart';
 
 @Component({
@@ -11,17 +11,18 @@ import { BarChartFormat, AreaChartFormat } from './classes/Chart';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  statuses: Array<Status> = [];
-  cases: Array<Case> = [];
+  statuses: Array<StatusModel> = [];
+  cases: Array<CaseModel> = [];
   totalCases: number;
-  statusesChartData: Array<AreaChartFormat>;
+  statusesChartData: Array<AreaChartFormat> = [];
   casesChartData: Array<BarChartFormat> = [];
 
   getStatuses(): void {
     this.httpService.get(`${environment.API_URL}/clientdata/getAllStatuses`).subscribe(
       (res: any) => {
-        res.statuses.forEach(status => {
-          const newStatus: Status = {
+        const statuses: Array<StatusModel> = res.statuses;
+        statuses.forEach(status => {
+          const newStatus: StatusModel = {
             date: new Date(status.date),
             cases: status.cases,
             deaths: status.deaths,
@@ -29,6 +30,8 @@ export class AppComponent implements OnInit {
           };
           this.statuses.push(newStatus);
         });
+        // push() is not recognized by change detection
+        this.statuses = [...this.statuses];
 
         // WORK WITH FETCHED DATA BELOW:
         // convert fetched data to ngx-chart format
@@ -42,13 +45,16 @@ export class AppComponent implements OnInit {
   getDailyCases(): void {
     this.httpService.get(`${environment.API_URL}/clientdata/getdailycases`).subscribe(
       (res: any) => {
-        res.dailyCases.forEach((dailyCase: Case) => {
-          const newCase: Case = {
+        const dailyCases: Array<CaseModel> = res.dailyCases;
+        dailyCases.forEach((dailyCase) => {
+          const newCase: CaseModel = {
             date: new Date(dailyCase.date),
             newCases: dailyCase.newCases
           };
           this.cases.push(newCase);
         });
+        // push() is not recognized by change detection
+        this.cases = [...this.cases];
 
         // WORK WITH FETCHED DATA BELOW:
         // convert fetched data to ngx-chart format
@@ -57,13 +63,13 @@ export class AppComponent implements OnInit {
     );
   }
 
-  statusesToChartFormat(statuses: Array<Status>): Array<AreaChartFormat> {
+  statusesToChartFormat(statuses: Array<StatusModel>): Array<AreaChartFormat> {
     const caseStatuses: Array<AreaChartFormat> = [];
     const newCaseStatus: AreaChartFormat = {
       name: 'Number of Cases',
       series: []
     };
-    statuses.forEach((status: Status) => {
+    statuses.forEach((status: StatusModel) => {
       const date = `${status.date.getFullYear()}-${status.date.getMonth() + 1}-${status.date.getDate()}`;
       newCaseStatus.series.push({name: date, value: status.cases});
     });
@@ -71,9 +77,9 @@ export class AppComponent implements OnInit {
     return caseStatuses;
   }
 
-  casesToChartFormat(cases: Array<Case>): Array<BarChartFormat> {
+  casesToChartFormat(cases: Array<CaseModel>): Array<BarChartFormat> {
     const chartCases: Array<BarChartFormat> = [];
-    cases.forEach((dailyCase: Case) => {
+    cases.forEach((dailyCase: CaseModel) => {
       const date = `${dailyCase.date.getFullYear()}-${dailyCase.date.getMonth() + 1}-${dailyCase.date.getDate()}`;
       const newCase: BarChartFormat = {
         name: date,
@@ -84,6 +90,19 @@ export class AppComponent implements OnInit {
     return chartCases;
   }
 
+  refreshData(): void {
+    // reset data values
+    this.statuses = [];
+    this.cases = [];
+    this.totalCases = null;
+    this.statusesChartData = [];
+    this.casesChartData = [];
+
+    // re-fetch datas from API
+    this.getStatuses();
+    this.getDailyCases();
+  }
+
   constructor(private httpService: HttpClientService) {
     // run fetch methods
     this.getStatuses();
@@ -91,5 +110,4 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {}
-
 }

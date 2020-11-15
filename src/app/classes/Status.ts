@@ -1,4 +1,4 @@
-export interface Status {
+export interface StatusModel {
   date: Date;
   cases: number;
   deaths: number;
