@@ -4,10 +4,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { SummaryValuesComponent } from './summary-values/summary-values.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SummaryValuesComponent
   ],
   imports: [
     BrowserModule,

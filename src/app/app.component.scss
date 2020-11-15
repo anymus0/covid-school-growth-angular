@@ -47,13 +47,17 @@
   height: 40vh;
 }
 
-.totalCases {
-  font-size: 2rem;
-  color: rgb(175, 68, 68);
-  font-weight: bold;
-}
-
 .errMsg {
+  text-align: center;
   color: rgb(223, 66, 66);
   font-size: 1.4rem;
+}
+
+.summaryValues {
+  padding: 4rem;
+  height: 35vh;
+}
+
+.btn-refresh {
+  padding: 1rem;
 }

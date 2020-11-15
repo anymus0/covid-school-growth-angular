@@ -15,6 +15,7 @@ export class AppComponent {
   statuses: Array<StatusModel> = [];
   cases: Array<CaseModel> = [];
   totalCases: number;
+  newCases: number;
   statusesChartData: Array<AreaChartFormat> = [];
   casesChartData: Array<BarChartFormat> = [];
   // error handling
@@ -84,6 +85,8 @@ export class AppComponent {
           // WORK WITH FETCHED DATA BELOW:
           // convert fetched data to ngx-chart format
           this.casesChartData = this.casesToChartFormat(this.cases);
+          // set 'newCases' to the latest new cases value
+          this.newCases = this.cases[this.cases.length - 1].newCases;
         }
       }
     );
@@ -130,6 +133,7 @@ export class AppComponent {
     // reset data values
     this.statuses = [];
     this.cases = [];
+    this.newCases = null;
     this.totalCases = null;
     this.statusesChartData = [];
     this.casesChartData = [];
