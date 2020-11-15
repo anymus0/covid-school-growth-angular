@@ -1,43 +1,60 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { HttpClientService } from './http.service';
 import { environment } from './../environments/environment';
 import { CaseModel } from './classes/Case';
 import { StatusModel } from './classes/Status';
 import { BarChartFormat, AreaChartFormat } from './classes/Chart';
+import { env } from 'process';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   statuses: Array<StatusModel> = [];
   cases: Array<CaseModel> = [];
   totalCases: number;
   statusesChartData: Array<AreaChartFormat> = [];
   casesChartData: Array<BarChartFormat> = [];
+  // error handling
+  resStatusSuccess: boolean;
+  resCaseSuccess: boolean;
+  statusErrMessage: string;
+  caseErrMessage: string;
+
+  // data related methods:
 
   getStatuses(): void {
     this.httpService.get(`${environment.API_URL}/clientdata/getAllStatuses`).subscribe(
       (res: any) => {
-        const statuses: Array<StatusModel> = res.statuses;
-        statuses.forEach(status => {
-          const newStatus: StatusModel = {
-            date: new Date(status.date),
-            cases: status.cases,
-            deaths: status.deaths,
-            recovered: status.recovered
-          };
-          this.statuses.push(newStatus);
-        });
-        // push() is not recognized by change detection
-        this.statuses = [...this.statuses];
+        if (res.success === false) {
+          // skip rest of the method if server fails
+          this.resStatusSuccess = res.success;
+          this.statusErrMessage = res.message;
+        }
+        else {
+          this.resStatusSuccess = res.success;
+          // set statuses arr
+          const statuses: Array<StatusModel> = res.statuses;
+          statuses.forEach(status => {
+            const newStatus: StatusModel = {
+              date: new Date(status.date),
+              cases: status.cases,
+              deaths: status.deaths,
+              recovered: status.recovered
+            };
+            this.statuses.push(newStatus);
+          });
+          // push() is not recognized by change detection
+          this.statuses = [...this.statuses];
 
-        // WORK WITH FETCHED DATA BELOW:
-        // convert fetched data to ngx-chart format
-        this.statusesChartData = this.statusesToChartFormat(this.statuses);
-        // set 'totalCases' to the latest status cases value
-        this.totalCases = this.statuses[this.statuses.length - 1].cases;
+          // WORK WITH FETCHED DATA BELOW:
+          // convert fetched data to ngx-chart format
+          this.statusesChartData = this.statusesToChartFormat(this.statuses);
+          // set 'totalCases' to the latest status cases value
+          this.totalCases = this.statuses[this.statuses.length - 1].cases;
+        }
       }
     );
   }
@@ -45,20 +62,39 @@ export class AppComponent implements OnInit {
   getDailyCases(): void {
     this.httpService.get(`${environment.API_URL}/clientdata/getdailycases`).subscribe(
       (res: any) => {
-        const dailyCases: Array<CaseModel> = res.dailyCases;
-        dailyCases.forEach((dailyCase) => {
-          const newCase: CaseModel = {
-            date: new Date(dailyCase.date),
-            newCases: dailyCase.newCases
-          };
-          this.cases.push(newCase);
-        });
-        // push() is not recognized by change detection
-        this.cases = [...this.cases];
+        if (res.success === false) {
+          // skip rest of the method if server fails
+          this.resCaseSuccess = res.success;
+          this.caseErrMessage = res.message;
+        }
+        else {
+          this.resCaseSuccess = res.success;
+          // set cases arr
+          const dailyCases: Array<CaseModel> = res.dailyCases;
+          dailyCases.forEach((dailyCase) => {
+            const newCase: CaseModel = {
+              date: new Date(dailyCase.date),
+              newCases: dailyCase.newCases
+            };
+            this.cases.push(newCase);
+          });
+          // push() is not recognized by change detection
+          this.cases = [...this.cases];
 
-        // WORK WITH FETCHED DATA BELOW:
-        // convert fetched data to ngx-chart format
-        this.casesChartData = this.casesToChartFormat(this.cases);
+          // WORK WITH FETCHED DATA BELOW:
+          // convert fetched data to ngx-chart format
+          this.casesChartData = this.casesToChartFormat(this.cases);
+        }
+      }
+    );
+  }
+
+  updateLatestStatus(): void {
+    this.httpService.put(`${environment.API_URL}/datamutate/updateLatestStatus`).subscribe(
+      () => {
+        // re-fetch datas from API
+        this.getStatuses();
+        this.getDailyCases();
       }
     );
   }
@@ -98,9 +134,9 @@ export class AppComponent implements OnInit {
     this.statusesChartData = [];
     this.casesChartData = [];
 
-    // re-fetch datas from API
-    this.getStatuses();
-    this.getDailyCases();
+    // update status in Database with the latest data from COVID API
+    // then fetch the updated data
+    this.updateLatestStatus();
   }
 
   constructor(private httpService: HttpClientService) {
@@ -108,6 +144,4 @@ export class AppComponent implements OnInit {
     this.getStatuses();
     this.getDailyCases();
   }
-
-  ngOnInit(): void {}
 }

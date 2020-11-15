@@ -13,6 +13,11 @@ export class HttpClientService {
     return dataStream;
   }
 
+  put(url: string): Observable<any> {
+    const dataStream = this.http.put(url, {});
+    return dataStream;
+  }
+
   constructor(private http: HttpClient) {
   }
 }

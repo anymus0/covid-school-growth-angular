@@ -2,9 +2,17 @@
   <div class="container-fluid chart-container">
     <div class="row dailyUpdate">
       <div class="col">
-        <h3>Total cases since school has started</h3>
-        <p class="totalCases">{{ totalCases }}</p>
+        <ng-template [ngIf]="resStatusSuccess === true" [ngIfElse]="errorTemplate">
+          <h3>Total cases since school has started</h3>
+          <p class="totalCases">{{ totalCases }}</p>
+        </ng-template>
         <button class="btn btn-danger" (click)="refreshData()">Refresh</button>
+        <ng-template #errorTemplate>
+          <div class="errMsg">
+            <h3>{{ statusErrMessage }}</h3>
+            <p>Please refresh again or reload the page!</p>
+          </div>
+        </ng-template>
       </div>
     </div>
     <div class="row">
