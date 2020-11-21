@@ -33,6 +33,9 @@ export class AppComponent {
   @HostListener('window:resize', ['$event'])
   onResize(event: any): void {
     this.setChartSizes();
+    // reset viewport
+    const viewportmeta = document.querySelector('meta[name="viewport"]');
+    viewportmeta.setAttribute('content', 'initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0');
   }
 
   // dynamically sets the chart width and height
