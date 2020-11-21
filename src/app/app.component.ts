@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { HttpClientService } from './http.service';
 import { environment } from './../environments/environment';
 import { CaseModel } from './classes/Case';
@@ -18,15 +18,40 @@ export class AppComponent {
   newCases: number;
   statusesChartData: Array<AreaChartFormat> = [];
   casesChartData: Array<BarChartFormat> = [];
+  // window sizes
+  areaChartWidth: number;
+  areaChartHeight: number;
+  barChartWidth: number;
+  barChartHeight: number;
   // error handling
   resStatusSuccess: boolean;
   resCaseSuccess: boolean;
   statusErrMessage: string;
   caseErrMessage: string;
 
+  // window resize event listener
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any): void {
+    this.setChartSizes();
+  }
+
+  // dynamically sets the chart width and height
+  private setChartSizes(): void {
+    if (window.screen.orientation.type === 'landscape-primary') {
+      this.areaChartWidth = (window.innerWidth / 100) * 90;
+      this.areaChartHeight = (window.innerHeight / 100) * 98;
+    }
+    else {
+      this.areaChartWidth = (window.innerWidth / 100) * 98;
+      this.areaChartHeight = (window.innerHeight / 100) * 65;
+    }
+    this.barChartWidth = (window.innerWidth / 100) * 98;
+    this.barChartHeight = (window.innerHeight / 100) * 65;
+  }
+
   // data related methods:
 
-  getStatuses(): void {
+  private getStatuses(): void {
     this.httpService.get(`${environment.API_URL}/clientdata/getAllStatuses`).subscribe(
       (res: any) => {
         if (res.success === false) {
@@ -60,7 +85,7 @@ export class AppComponent {
     );
   }
 
-  getDailyCases(): void {
+  private getDailyCases(): void {
     this.httpService.get(`${environment.API_URL}/clientdata/getdailycases`).subscribe(
       (res: any) => {
         if (res.success === false) {
@@ -92,7 +117,7 @@ export class AppComponent {
     );
   }
 
-  updateLatestStatus(): void {
+  private updateLatestStatus(): void {
     this.httpService.put(`${environment.API_URL}/datamutate/updateLatestStatus`).subscribe(
       () => {
         // re-fetch datas from API
@@ -102,7 +127,7 @@ export class AppComponent {
     );
   }
 
-  statusesToChartFormat(statuses: Array<StatusModel>): Array<AreaChartFormat> {
+  private statusesToChartFormat(statuses: Array<StatusModel>): Array<AreaChartFormat> {
     const caseStatuses: Array<AreaChartFormat> = [];
     const newCaseStatus: AreaChartFormat = {
       name: 'Number of Cases',
@@ -116,7 +141,7 @@ export class AppComponent {
     return caseStatuses;
   }
 
-  casesToChartFormat(cases: Array<CaseModel>): Array<BarChartFormat> {
+  private casesToChartFormat(cases: Array<CaseModel>): Array<BarChartFormat> {
     const chartCases: Array<BarChartFormat> = [];
     cases.forEach((dailyCase: CaseModel) => {
       const date = `${dailyCase.date.getFullYear()}-${dailyCase.date.getMonth() + 1}-${dailyCase.date.getDate()}`;
@@ -144,6 +169,8 @@ export class AppComponent {
   }
 
   constructor(private httpService: HttpClientService) {
+    // set window size props
+    this.setChartSizes();
     // run fetch methods
     this.getStatuses();
     this.getDailyCases();

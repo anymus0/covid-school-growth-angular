@@ -6,11 +6,6 @@
           [ngIf]="resStatusSuccess === true && resCaseSuccess === true"
           [ngIfElse]="errorTemplate"
         >
-          <app-summary-values
-            [totalCases]="totalCases"
-            [newCasesToday]="newCases"
-          >
-          </app-summary-values>
         </ng-template>
         <ng-template #errorTemplate>
           <div class="errMsg">
@@ -23,49 +18,15 @@
         <button class="btn btn-danger btn-refresh" (click)="refreshData()">Refresh</button>
       </div>
     </div>
-
-
     <div class="row diagramRow">
       <div class="col-12">
         <h3>Total number of cases by date</h3>
         <ngx-charts-area-chart
-          class="mobile-portrait"
-          [view]="[400, 650]"
-          [legend]="false"
-          [showXAxisLabel]="true"
-          [showYAxisLabel]="true"
-          [xAxis]="true"
-          [yAxis]="true"
-          [xAxisLabel]="'Days'"
-          [yAxisLabel]="'Number of Total Cases'"
-          [timeline]="true"
-          [results]="statusesChartData"
-          [autoScale]="true"
-          [gradient]="false"
-        >
-        </ngx-charts-area-chart>
-        <ngx-charts-area-chart
-          class="mobile-landscape"
-          [view]="[700, 500]"
-          [legend]="false"
-          [showXAxisLabel]="true"
-          [showYAxisLabel]="true"
-          [xAxis]="true"
-          [yAxis]="true"
-          [xAxisLabel]="'Days'"
-          [yAxisLabel]="'Number of Total Cases'"
-          [timeline]="true"
-          [results]="statusesChartData"
-          [autoScale]="true"
-          [gradient]="false"
-        >
-        </ngx-charts-area-chart>
-        <ngx-charts-area-chart
           class="desktop"
-          [view]="[1700, 800]"
+          [view]="[areaChartWidth, areaChartHeight]"
           [legend]="false"
-          [showXAxisLabel]="true"
-          [showYAxisLabel]="true"
+          [showXAxisLabel]="false"
+          [showYAxisLabel]="false"
           [xAxis]="true"
           [yAxis]="true"
           [xAxisLabel]="'Days'"
@@ -79,46 +40,16 @@
       </div>
       <div class="col-12">
         <h3>Number of new daily cases by dates</h3>
-        <ngx-charts-bar-horizontal
-          class="mobile-portrait"
-          [view]="[400,850]"
-          [results]="casesChartData"
-          [xAxisLabel]="'Number of new cases on each day'"
-          [legendTitle]=""
-          [yAxisLabel]="'Days'"
-          [legend]="false"
-          [showXAxisLabel]="true"
-          [showYAxisLabel]="true"
-          [xAxis]="true"
-          [yAxis]="false"
-          [gradient]="false"
-        >
-        </ngx-charts-bar-horizontal>
-        <ngx-charts-bar-vertical
-          class="mobile-landscape"
-          [view]="[700, 400]"
-          [results]="casesChartData"
-          [xAxisLabel]="'Days'"
-          [legendTitle]=""
-          [yAxisLabel]="'Number of new cases on each day'"
-          [legend]="false"
-          [showXAxisLabel]="true"
-          [showYAxisLabel]="true"
-          [xAxis]="true"
-          [yAxis]="true"
-          [gradient]="false"
-        >
-        </ngx-charts-bar-vertical>
         <ngx-charts-bar-vertical
           class="desktop"
-          [view]="[1700, 800]"
+          [view]="[barChartWidth, barChartHeight]"
           [results]="casesChartData"
           [xAxisLabel]="'Days'"
           [legendTitle]=""
           [yAxisLabel]="'Number of new cases on each day'"
           [legend]="false"
-          [showXAxisLabel]="true"
-          [showYAxisLabel]="true"
+          [showXAxisLabel]="false"
+          [showYAxisLabel]="false"
           [xAxis]="true"
           [yAxis]="true"
           [gradient]="false"
