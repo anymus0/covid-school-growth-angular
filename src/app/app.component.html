@@ -1,19 +1,29 @@
 <div id="app" class="dark">
   <div class="container-fluid chart-container">
-    <div class="row summaryValues">
-      <div class="col-12">
+    <div class="row summaryValues d-flex flex-wrap align-items-center">
         <ng-template
           [ngIf]="resStatusSuccess === true && resCaseSuccess === true"
           [ngIfElse]="errorTemplate"
         >
-        </ng-template>
-        <ng-template #errorTemplate>
-          <div class="errMsg">
-            <h3>{{ statusErrMessage }}</h3>
-            <p>Please refresh again or reload the page!</p>
+          <div class="col-lg-6 col-sm-12">
+            <app-summary title='Total cases since school has started' [value]="totalCases">
+            </app-summary>
+          </div>
+          <div class="col-lg-6 col-sm-12">
+            <app-summary title='New cases since yesterday' [value]="newCases">
+            </app-summary>
           </div>
         </ng-template>
-      </div>
+        <ng-template #errorTemplate>
+          <div class="col-12">
+            <div class="errMsg">
+              <h3>{{ statusErrMessage }}</h3>
+              <p>Please refresh again or reload the page!</p>
+            </div>
+          </div>
+        </ng-template>
+    </div>
+    <div class="row">
       <div class="col-12">
         <button class="btn btn-danger btn-refresh" (click)="refreshData()">Refresh</button>
       </div>
@@ -38,6 +48,8 @@
         >
         </ngx-charts-area-chart>
       </div>
+    </div>
+    <div class="row diagramRow">
       <div class="col-12">
         <h3>Number of new daily cases by dates</h3>
         <ngx-charts-bar-vertical

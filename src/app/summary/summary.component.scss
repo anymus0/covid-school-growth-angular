@@ -1,0 +1,26 @@
+p {
+  color: #af4444;
+  font-size: 1.5rem;
+  font-weight: bolder;
+}
+
+h3 {
+  font-size: 1.2rem;
+}
+
+@media only screen and (min-width: 762px) {
+  h3 {
+    font-size: 2rem;
+  }
+  p {
+    font-size: 2rem;
+  }
+}
+
+.summary {
+  background-color: #282d39;
+  padding: 1rem;
+  border-radius: 28px;
+  max-height: 10rem;
+  margin-bottom: 1rem;
+}
