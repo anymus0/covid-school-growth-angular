@@ -1,3 +1,6 @@
+## API
+To run this SPA you'll need to set up my [API from here](https://github.com/anymus0/covid-school-growth-api)!
+
 # CovidSchoolGrowthAngular
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.1.
