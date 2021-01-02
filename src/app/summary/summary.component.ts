@@ -7,8 +7,8 @@ import { Component, Input } from '@angular/core';
 })
 export class SummaryComponent {
   @Input() title: string;
-  @Input() value: number;
+  @Input() value: any;
 
-  constructor() { }
+  constructor() {}
 
 }

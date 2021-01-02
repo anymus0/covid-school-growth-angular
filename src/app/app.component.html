@@ -6,11 +6,19 @@
           [ngIfElse]="errorTemplate"
         >
           <div class="col-lg-6 col-sm-12">
-            <app-summary title='Total cases since school has started' [value]="totalCases">
+            <app-summary title='Total cases since school has started' [value]="'Will reset after Jan. 10'">
             </app-summary>
           </div>
           <div class="col-lg-6 col-sm-12">
             <app-summary title='New cases since yesterday' [value]="newCases">
+            </app-summary>
+          </div>
+          <div class="col-lg-6 col-sm-12">
+            <app-summary title='Total cases' [value]="totalCases">
+            </app-summary>
+          </div>
+          <div class="col-lg-6 col-sm-12">
+            <app-summary title='Last update' [value]="lastUpdate">
             </app-summary>
           </div>
         </ng-template>

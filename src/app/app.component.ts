@@ -4,7 +4,6 @@ import { environment } from './../environments/environment';
 import { CaseModel } from './classes/Case';
 import { StatusModel } from './classes/Status';
 import { BarChartFormat, AreaChartFormat } from './classes/Chart';
-import { env } from 'process';
 
 @Component({
   selector: 'app-root',
@@ -15,9 +14,11 @@ export class AppComponent {
   statuses: Array<StatusModel> = [];
   cases: Array<CaseModel> = [];
   totalCases: number;
+  totalCasesSinceSchool: number;
   newCases: number;
   statusesChartData: Array<AreaChartFormat> = [];
   casesChartData: Array<BarChartFormat> = [];
+  lastUpdate: string;
   // window sizes
   areaChartWidth: number;
   areaChartHeight: number;
@@ -81,8 +82,13 @@ export class AppComponent {
           // WORK WITH FETCHED DATA BELOW:
           // convert fetched data to ngx-chart format
           this.statusesChartData = this.statusesToChartFormat(this.statuses);
-          // set 'totalCases' to the latest status cases value
-          this.totalCases = this.statuses[this.statuses.length - 1].cases - this.statuses[0].cases;
+          // set 'totalCasesSinceSchool' to the latest status cases value
+          this.totalCasesSinceSchool = this.statuses[this.statuses.length - 1].cases - this.statuses[0].cases;
+          // set 'totalCases'
+          this.totalCases = this.statuses[this.statuses.length - 1].cases;
+          // set 'lastUpdate'
+          const rawLastUpdateDate = this.statuses[this.statuses.length - 1].date;
+          this.lastUpdate = `${rawLastUpdateDate.toLocaleDateString()} ${rawLastUpdateDate.toLocaleTimeString()}`;
         }
       }
     );
@@ -162,7 +168,7 @@ export class AppComponent {
     this.statuses = [];
     this.cases = [];
     this.newCases = null;
-    this.totalCases = null;
+    this.totalCasesSinceSchool = null;
     this.statusesChartData = [];
     this.casesChartData = [];
 
